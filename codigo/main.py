@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands, tasks
 from discord import Embed, app_commands
 import random
+import asyncio
 import datetime
 
 intents = discord.Intents.all() #permissões
@@ -76,6 +77,57 @@ async def videos(interaction:discord.Interaction, video:app_commands.Choice[str]
         await interaction.response.send_message(file=discord.File(videos_maneiros))
 
 
+#devia ser crime usar programação pra fazer essa cagada aqui kkkkkkkkkkkkkkkkk
+@bot.tree.command(name="ruby-chaan", description="me arrependo profundamente disso")
+async def aiscream(interaction: discord.Interaction):
+    await interaction.response.send_message("Ruby-chaaan! ^_^")
+    await asyncio.sleep(1)
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o ")
+    await asyncio.sleep(1.5)
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? ")
+    await asyncio.sleep(1.5)
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) ")
+    await asyncio.sleep(0.5)
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n ")
+    await asyncio.sleep(2)
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n \nAyumu-chaan! ^_^")
+    await asyncio.sleep(1)
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
+                                            "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*)")
+    await asyncio.sleep(1.5)    
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
+                                            "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii?")
+    await asyncio.sleep(1.5)    
+    await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
+                                            "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii? \nSutoroberi fureivo! yori  mo  a-na-ta (✿◡‿◡)")
+    
+
+@bot.event
+async def on_message(msg:discord.Message):
+    if msg.author == bot.user:
+        return
+    
+    if msg.content.lower() == "ruby chan!":
+        aiscream = await msg.reply(content="Haaaaayyy ヾ(≧▽≦\\*)o ")
+        await asyncio.sleep(1.5)
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? ")
+        await asyncio.sleep(1.5)
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) ")
+        await asyncio.sleep(0.5)
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n ")
+        await asyncio.sleep(2)
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n \nAyumu-chaan! ^_^")
+        await asyncio.sleep(1)
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
+                                                "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*)")
+        await asyncio.sleep(1.5)    
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
+                                                "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii?")
+        await asyncio.sleep(1.5)    
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
+                                                "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii? \nSutoroberi fureivo! yori  mo  a-na-ta (✿◡‿◡)")
+
+
 #loopa um timer de 60 segundos até que os horários sejam condizentes, quando isso ocorre
 #solta minha mensagem programada
 @tasks.loop(seconds=60)
@@ -95,4 +147,4 @@ async def mensagem_programada():
 async def ola(ctx: commands.Context):
     await ctx.send("saudações, perdedor")
 
-bot.run("confidencial 🕵️")
+bot.run("segredo secreto 🕵️")
