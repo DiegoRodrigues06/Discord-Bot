@@ -10,6 +10,8 @@ import datetime
 intents = discord.Intents.all() #permissões
 bot = commands.Bot(">", intents=intents)
 
+roleta_jogo = {}
+
 VIDEOS = {
     "bomba": "./videos/oia as bomba.mp4",
     "100 reais": "./videos/100 reaais.mp4",
@@ -128,6 +130,105 @@ async def on_message(msg:discord.Message):
                                                 "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii? \nSutoroberi fureivo! yori  mo  a-na-ta (✿◡‿◡)")
 
 
+
+#mini game de roleta russa altamente perigoso
+@bot.tree.command(name="roleta_russa", description="muahahahah")
+async def roleta_russa(interaction:discord.Interaction):
+    embed = discord.Embed(
+        title="Roleta Russa 🔫🐀",
+        description="reaja com o emoji para participar",
+        color=discord.Color.blurple()
+    )
+    await interaction.response.send_message(embed=embed)
+    msg = await interaction.original_response()
+
+    await msg.add_reaction("🔫")
+
+    await asyncio.sleep(7)
+
+    msg = await interaction.channel.fetch_message(msg.id) #pega a mensagem apos todas as atualizações
+
+    #estou ficando louco, ponto.
+    #lista os usuarios que reagiram a mensagem
+    reaction = discord.utils.get(msg.reactions, emoji="🔫")
+    players = []
+    async for user in reaction.users():
+        if not user.bot:
+            players.append(user) 
+    
+    if not players:
+        return await interaction.followup.send("seus cabeça de prego, me chamam pra nada é?")
+    
+    nomes = "\n".join(user.display_name for user in players)
+    await interaction.followup.send(f"Aqui a lista dos pobres coitados:\n{nomes}")
+
+    await asyncio.sleep(3)
+    await interaction.channel.send("a bala ta no pente ☠️")
+
+    await asyncio.sleep(3)
+    
+    #nesse bloco, gero um numero aleatorio pra ser a bala, e salvo tanto a bala, qnt os players que que reagiram, na variavel roleta_jogos
+    #e uma lista de numeros disponiveis pra dar rolls. alem de uma nova "variavel", que vai armazenar a informação de se o player ja jogou
+    #ou não, e tbm uma variavel pra dizer se o jogo esta rodando, como default começa com True
+    bala = random.randint(1, 6)
+    numeros_disponiveis = [1, 2 ,3 , 4 , 5, 6]
+    
+    #djabo dos inferno
+    roleta_jogo[interaction.channel.id] = {
+    'players': players,
+    'bala': bala,
+    'numeros_disponiveis': numeros_disponiveis,
+    'ja_jogou': [],
+    'ativo': True
+}
+
+    await interaction.channel.send("que começem os jogos 👿")
+    await asyncio.sleep(2)
+    await interaction.channel.send("podem dar rolls")
+
+#comando novo de rolls, porem, só vai funcionar se o mini game estiver rolando
+@bot.tree.command(name="rolls", description="rolas")
+async def rolls(interaction:discord.Interaction):
+    jogo = roleta_jogo.get(interaction.channel.id)
+
+    #o ephemeral só faz com que o autor da interação receba a mensagem
+    if not jogo or not jogo['ativo']:
+        return await interaction.response.send_message("não tem nenhum jogo rolando", ephemeral=True)
+        
+    if interaction.user not in jogo["players"]:
+        return await interaction.response.send_message("sai daqui vaicilão, ta nem jogando", ephemeral=True)
+        
+    if interaction.user in jogo['ja_jogou']:
+        return await interaction.response.send_message("te acalma, precoce", ephemeral=True)
+        
+    if not jogo['numeros_disponiveis']:
+        return await interaction.response.send_message("todos se safaram, o sossego esta restaurado", ephemeral=True)
+        
+    numero_player = random.choice(jogo['numeros_disponiveis'])
+    jogo['numeros_disponiveis'].remove(numero_player) #remove o numero que ja foi sorteado, diminuindo a qnt de bala, aumentando a chance do prox se lasca
+    jogo['ja_jogou'].append(interaction.user) # aplica o estado "ja jogou", ao autor da interação, assim ele n pode jogar dnv 
+        
+    await interaction.channel.send("roda a roleeeta, maria")
+    await asyncio.sleep(2)
+    await interaction.channel.send(f"{interaction.user.display_name} será vc atingido pela bala??!!")
+    
+    await asyncio.sleep(3)
+    if numero_player == jogo['bala']:
+        await interaction.channel.send("se fudeu kkkkkkkk, toma esse ban 😂")
+        await interaction.guild.kick(interaction.user, reason="os guri cobraram")
+
+        jogo['ativo'] = False
+    else:
+        await interaction.channel.send(f"sobreviveste, {interaction.user.display_name}. agradeça ao criador 🙏")
+
+    await asyncio.sleep(1)
+    #se todo mundo que estava inscrito ja jogou, mas sobraram chances, inclusive a bala, o jogo acaba
+    if len(jogo['ja_jogou']) == len(jogo['players']) and jogo['numeros_disponiveis']:
+        jogo['ativo'] = False
+        return await interaction.channel.send("todos já jogaram, e ninguem morreu 😢, que inconveniente... \nentão cabo o jogo, ponto.")
+
+    
+    
 #loopa um timer de 60 segundos até que os horários sejam condizentes, quando isso ocorre
 #solta minha mensagem programada
 @tasks.loop(seconds=60)
@@ -147,4 +248,4 @@ async def mensagem_programada():
 async def ola(ctx: commands.Context):
     await ctx.send("saudações, perdedor")
 
-bot.run("segredo secreto 🕵️")
+bot.run("nada aqui")
