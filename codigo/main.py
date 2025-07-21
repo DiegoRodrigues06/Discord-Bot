@@ -31,7 +31,7 @@ async def on_ready(): #evento que dispara quando o bot é inicializado
 
 @bot.event
 async def on_member_join(membro:discord.Member):
-    canal = bot.get_channel(1363989205369356288)
+    canal = bot.get_channel(1366545613340147787)
     await canal.send(f"muito bom dia, {membro.mention}. todo  membro novo deve mandar 1000 v-bucks ao proprietário.")
 
 
@@ -101,8 +101,9 @@ async def aiscream(interaction: discord.Interaction):
                                             "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii?")
     await asyncio.sleep(1.5)    
     await interaction.edit_original_response(content="Ruby-chaaan! ^_^ \nHaaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
-                                            "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii? \nSutoroberi fureivo! yori  mo  a-na-ta (✿◡‿◡)")
-    
+                                                "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii? \nSutoroberi fureivo! yori  mo  a-na-ta (✿◡‿◡)\n"
+                                                "\nShiki-chaaan! ^_^ \nHaay U_U \nNani ga sukiii? \nKuki endo crime! yori mo a-na-ta (¬‿¬)")
+
 
 @bot.event
 async def on_message(msg:discord.Message):
@@ -128,8 +129,10 @@ async def on_message(msg:discord.Message):
         await asyncio.sleep(1.5)    
         await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
                                                 "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii? \nSutoroberi fureivo! yori  mo  a-na-ta (✿◡‿◡)")
-
-
+        await asyncio.sleep(2)
+        await aiscream.edit(content="Haaaaayyy ヾ(≧▽≦\\*)o \nNani ga sukii?? \nChocomin to! yori mo a-na-ta (\\*/ω＼*) \n "
+                                                "\nAyumu-chaan! ^_^ \nHaaaaaay (\\*^▽^\\*) \nNani ga sukiii? \nSutoroberi fureivo! yori  mo  a-na-ta (✿◡‿◡)\n"
+                                                "\nShiki-chaaan! ^_^ \nHaay U_U \nNani ga sukiii? \nKuki endo crime! yori mo a-na-ta (¬‿¬)")
 
 #mini game de roleta russa altamente perigoso
 @bot.tree.command(name="roleta_russa", description="muahahahah")
@@ -167,9 +170,9 @@ async def roleta_russa(interaction:discord.Interaction):
 
     await asyncio.sleep(3)
     
-    #nesse bloco, gero um numero aleatorio pra ser a bala, e salvo tanto a bala, qnt os players que que reagiram, na variavel roleta_jogos
-    #e uma lista de numeros disponiveis pra dar rolls. alem de uma nova "variavel", que vai armazenar a informação de se o player ja jogou
-    #ou não, e tbm uma variavel pra dizer se o jogo esta rodando, como default começa com True
+    # nesse bloco, gero um numero aleatorio pra ser a bala, e salvo tanto a bala, qnt os players que que reagiram, na variavel roleta_jogos
+    # e uma lista de numeros disponiveis pra dar rolls. alem de uma nova "variavel", que vai armazenar a informação de se o player ja jogou
+    # ou não, e tbm uma variavel pra dizer se o jogo esta rodando, como default começa com True
     bala = random.randint(1, 6)
     numeros_disponiveis = [1, 2 ,3 , 4 , 5, 6]
     
@@ -235,8 +238,8 @@ async def rolls(interaction:discord.Interaction):
 async def mensagem_programada():
     agora = datetime.datetime.now()
 
-    if agora.hour==9 and agora.minute==0:    
-        canal = bot.get_channel(1363999275977146479)
+    if agora.hour==20 and agora.minute==11:    
+        canal = bot.get_channel(1366545694600728576)
         caminho = VIDEOS.get("bom dia")
         mensagem = "BOM DIAAAAA (isso claramente não é um ataque ao bot bom-dia, ponto.)"
 
@@ -248,4 +251,4 @@ async def mensagem_programada():
 async def ola(ctx: commands.Context):
     await ctx.send("saudações, perdedor")
 
-bot.run("nada aqui")
+bot.run("aff")
